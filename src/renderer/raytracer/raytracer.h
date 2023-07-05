@@ -145,7 +145,7 @@ namespace cg::renderer
 		width = in_width;
 		height = in_height;
 
-		history = std::make_shared<cg::resource<float3>>(width * height);
+		history = std::make_shared<cg::resource<float3>>(width, height);
 	}
 
 	template<typename VB, typename RT>
@@ -217,11 +217,11 @@ namespace cg::renderer
 
 					payload payload = trace_ray(ray, depth);
 					auto& history_pixel = history->item(x, y);
-					history_pixel += float3{
+					history_pixel += sqrt(float3{
 							payload.color.r,
 							payload.color.g,
 							payload.color.b
-					} * frame_weight;
+					} * frame_weight);
 
 					if (frame_id == accumulation_num - 1)
 						render_target->item(x, y) =
@@ -229,7 +229,6 @@ namespace cg::renderer
 				}
 			}
 		}
-		// TODO Lab: 2.06 Implement TAA in `ray_generation` method of `raytracer` class
 	}
 
 	template<typename VB, typename RT>
@@ -267,8 +266,6 @@ namespace cg::renderer
 										  *closest_triangle, depth);
 		}
 
-		// TODO Lab: 2.04 Adjust `trace_ray` method of `raytracer` to use `any_hit_shader`
-		// TODO Lab: 2.05 Adjust `trace_ray` method of `raytracer` class to traverse the acceleration structure
 		return miss_shader(ray);
 	}
 
