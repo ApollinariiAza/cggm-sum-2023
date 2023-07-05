@@ -210,7 +210,6 @@ const std::vector<std::filesystem::path>& cg::world::model::get_per_shape_textur
 	return textures;
 }
 
-
 const float4x4 cg::world::model::get_world_matrix() const
 {
 	return float4x4{

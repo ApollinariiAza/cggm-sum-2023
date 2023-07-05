@@ -36,7 +36,7 @@ void cg::renderer::rasterization_renderer::init()
 void cg::renderer::rasterization_renderer::render()
 {
 	auto start = std::chrono::high_resolution_clock::now();
-	rasterizer->clear_render_target({255, 205, 150});
+	rasterizer->clear_render_target({0, 0, 0});
 
 	float4x4 matrix = mul(
 			camera->get_projection_matrix(),
@@ -71,9 +71,6 @@ void cg::renderer::rasterization_renderer::render()
 	std::cout << "Rasterization took " << duration.count() << " ms\n";
 
 	cg::utils::save_resource(*render_target, settings->result_path);
-	// TODO Lab: 1.04 Implement `vertex_shader` lambda for the instance of `cg::renderer::rasterizer`
-	// TODO Lab: 1.05 Implement `pixel_shader` lambda for the instance of `cg::renderer::rasterizer`
-	// TODO Lab: 1.03 Adjust `cg::renderer::rasterization_renderer` class to consume `cg::world::model`
 }
 
 void cg::renderer::rasterization_renderer::destroy() {}
